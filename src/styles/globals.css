@@ -1,0 +1,458 @@
+/* Primary cause for the size of this file is the fact that it's either highly challenging or impossible to apply/overwrite
+styles in more reliable way for some of the external libraries used in this project */
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  scroll-behavior: smooth;
+}
+
+html {
+  scroll-padding-top: 100px;
+}
+
+#__next {
+  height: 100%;
+}
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+/* Main loader animation */
+
+@layer utilities {
+  .animation-delay-200 {
+    animation-delay: 0.2s;
+  }
+  .animation-delay-400 {
+    animation-delay: 0.4s;
+  }
+}
+
+.circle {
+  @apply w-4 h-4 my-12 mx-1 bg-mainColor rounded-full;
+}
+
+/* Calendar  */
+
+.fc-scrollgrid-sync-table tbody tr:nth-child(6) {
+  @apply hidden;
+}
+.fc-button {
+  @apply !outline-0 border border-inputBorder text-primaryText placeholder-secondaryText placeholder-secondaryText text-primaryText hover:!border-inputBorderHover hover:!border-inputBorderHover transition hover:bg-inputBgHover hover:!bg-outlinedButtonBgHover !bg-inputBg !bg-inputBg !border-inputBorder !border-inputBorder;
+}
+.fc-button-primary {
+  @apply !text-primaryText;
+}
+.fc th,
+.fc td,
+.fc table {
+  @apply border-calendarBorder;
+}
+.fc td {
+  @apply max-h-12;
+}
+.fc-daygrid-day {
+  @apply hover:!bg-[rgb(255,255,255,0.02)] transition;
+}
+.fc-day-disabled {
+  @apply !bg-[rgb(255,255,255,0.03)];
+}
+.fc-daygrid-day-number {
+  font-size: 1.5rem;
+}
+.fc-daygrid-block-event {
+  @apply bg-calendarMainColor border-none;
+}
+.fc-daygrid-event-dot {
+  @apply border-calendarMainColor;
+}
+.fc-list-event-dot {
+  @apply !border-calendarMainColor;
+}
+.fc-v-event {
+  @apply bg-calendarMainColor  border-none;
+}
+.fc-list-day-cushion,
+.fc-list-day {
+  @apply !border-calendarBorder !bg-calendarListDayHeaderBg;
+}
+.fc-list {
+  @apply !border-calendarBorder;
+}
+.fc {
+  --fc-page-bg-color: calendarBorder !important;
+  --fc-list-event-hover-bg-color: rgb(255, 255, 255, 0.02);
+}
+.fc-day-today {
+  @apply hover:!bg-inputBg !bg-calendarTodayBg;
+}
+.fc-view-harness,
+.fc-scrollgrid-sync-table {
+  @apply max-h-[35rem] md:max-h-[55rem];
+}
+.fc-toolbar-title {
+  @apply text-primaryText;
+}
+.fc-col-header-cell-cushion {
+  @apply text-primaryText;
+}
+.fc-event-time,
+.fc-event-title {
+  @apply text-primaryText;
+}
+.fc-daygrid-day-number {
+  @apply text-primaryText;
+}
+.fc-cell-shaded {
+  @apply !bg-calendarListDayHeaderBg;
+}
+.fc-list-day-text,
+.fc-list-day-side-text,
+.fc-list-event-time,
+.fc-list-event-title,
+.fc-timegrid-axis-cushion,
+.fc-timegrid-slot-label-cushion {
+  @apply text-primaryText;
+}
+.fc-theme-standard .fc-scrollgrid {
+  @apply border-mainBorder;
+}
+.fc-listMonth-view {
+  @apply !border-mainBorder;
+}
+.fc-list-empty-cushion {
+  @apply text-primaryText;
+}
+.fc-list-empty {
+  @apply !bg-calendarListDayHeaderBg;
+}
+.fc-toolbar-chunk .fc-toolbar-title {
+  @apply capitalize;
+}
+
+.fc-daygrid-day-events a.fc-event {
+  height: 1.7rem;
+  padding-top: 0.1rem;
+  padding-left: 0.2rem;
+}
+.fc-daygrid-day-events .fc-event-main * {
+  color: white;
+}
+
+@media (max-width: 768px) {
+  .fc-media-screen {
+    max-height: 100vh !important;
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .fc-media-screen {
+    height: 90rem;
+    padding-inline: 1rem;
+  }
+  .fc-toolbar-chunk {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1.5rem;
+  }
+  .fc-header-toolbar {
+    display: flex;
+    flex-wrap: wrap;
+    padding-left: 0rem;
+    padding-top: 1rem;
+    width: 100%;
+  }
+  .fc-today-button {
+    display: none !important;
+  }
+  .fc-toolbar-title {
+    font-size: 1.1rem !important;
+  }
+  .fc-list-event-title,
+  .fc-list-event-graphic {
+    border-width: 0 !important;
+  }
+}
+
+@media (max-width: 650px) {
+  .fc-media-screen {
+  }
+  .fc-toolbar-chunk {
+    width: 49%;
+  }
+  .fc-header-toolbar {
+    max-width: 19.5rem;
+    margin-left: 0rem;
+  }
+  .fc-list-event .fc-list-event-time {
+    min-width: 100%;
+  }
+  .fc-list-event {
+    display: flex;
+    flex-wrap: wrap;
+  }
+  .fc-list-day-cushion {
+  }
+}
+
+.fc .fc-list-sticky .fc-list-day > * {
+  position: relative;
+}
+
+/* Overwrite of some Tremor styles to adjust data charts for multiple themes */
+/* Styles below will cease to be needed once Tremor allows custom colors for charts */
+
+/* Primary chart background for bar chart rectangles, e.g. 1st and 3rd chart in HomeSmallCards component*/
+.recharts-wrapper .fill-purple-500 {
+  @apply !fill-chartPrimaryBg;
+}
+
+/* Primary chart background - for donut charts on Homepage and Analytics page */
+.assetPerformanceCard .recharts-wrapper .fill-blue-500,
+.regionsCard .recharts-wrapper .fill-blue-500 {
+  @apply !fill-chartPrimaryBg;
+}
+
+/* Secondary chart background for bar chart rectangles, e.g. 2nd and 4th chart in HomeSmallCards component */
+.recharts-wrapper .fill-cyan-500 {
+  @apply fill-chartSecondaryBg;
+}
+
+/* Slightly lighter background for bar chart rectangles in Performance chart in Obsidian theme */
+.performanceCard .recharts-wrapper .fill-blue-500 {
+  @apply fill-[#3c76c1] !important;
+}
+.performanceCard .tremor-Legend-root .text-blue-500 {
+  @apply fill-[#3c76c1] !important;
+}
+
+/* Main Tremor card component */
+.tremor-Card-root {
+  @apply border !border-mainBorder bg-primaryBg;
+}
+
+/* Better contrast for Tremor reddish badge */
+.tremor-TableCell-root .text-red-600,
+.tremor-ListItem-root .text-red-600 {
+  @apply text-redBadgeText;
+}
+
+/* Better contrast for Tremor warning badge */
+.tremor-TableCell-root .text-orange-600,
+.tremor-ListItem-root .text-orange-600 {
+  @apply text-orangeBadgeText;
+}
+
+/* Better contrast for Tremor greenish badge */
+.tremor-TableCell-root .text-emerald-600,
+.tremor-ListItem-root .text-emerald-600 {
+  @apply text-greenBadgeText;
+}
+
+/* Fix for "Invalid prop `wrapperStyle`" error specific for Tremor library */
+#salesCard,
+#profitCard,
+#trafficCard,
+#customersCard * {
+  pointer-events: none;
+}
+
+/* Chart backgrounds for dots in Tremor legend/tooltip components */
+.tremor-Legend-root .text-cyan-500 {
+  @apply text-chartSecondaryBg;
+}
+.tremor-Legend-root .text-blue-500 {
+  @apply text-chartPrimaryBg;
+}
+.recharts-tooltip-wrapper .bg-blue-500 {
+  @apply bg-chartPrimaryBg;
+}
+.tremor-Legend-root .text-purple-500 {
+  @apply text-chartPrimaryBg;
+}
+.recharts-tooltip-wrapper .bg-purple-500 {
+  @apply bg-chartPrimaryBg;
+}
+.recharts-tooltip-wrapper .bg-cyan-500 {
+  @apply bg-chartSecondaryBg;
+}
+.recharts-tooltip-stable .tremor-Legend-root .text-blue-500 {
+  @apply text-blue-600;
+}
+.recharts-tooltip-stable .recharts-tooltip-wrapper .bg-blue-500 {
+  @apply bg-blue-600;
+}
+
+.recharts-scatter-symbol {
+  @apply stroke-none;
+}
+
+/* Font color for axis ticks in Recharts charts */
+.recharts-cartesian-axis-tick-value tspan,
+.recharts-polar-angle-axis-tick-value tspan,
+.recharts-cartesian-axis-tick text {
+  @apply fill-secondaryText;
+}
+
+/* Disable upper empty part of tooltip on Today Sales section on /analytics page */
+.todaySalesContainer .recharts-tooltip-wrapper .border-b {
+  display: none;
+}
+
+/* Active tab in Today Sales section */
+.todaySalesContainer
+  .tremor-TabList-root
+  button[data-headlessui-state="selected"] {
+  @apply !text-blue-400;
+}
+
+.menuItemIcon svg {
+  @apply w-[20px] h-[20px] 3xl:w-[22px] 3xl:h-[22px];
+}
+
+.menuItemLogo svg {
+  @apply w-[22px] h-[22px] 3xl:w-[25px] 3xl:h-[25px];
+}
+
+/* Hide unnecessary grid lines in Tremor bar charts */
+.small-box .recharts-cartesian-grid-horizontal {
+  display: none;
+}
+
+/* Add margin for mobile resolution of legend section im bars single chart page */
+.single-chart-bars .tremor-Legend-root {
+  @apply mb-6 sm:mb-2;
+}
+
+/* Fix selected tab title color in Today Sales section
+.ui-selected\:text-tremor-brand[data-headlessui-state~="selected"] {
+  color: red !important;
+} */
+
+/* Hide outline until better solution for styling input borders on multiple themes is developed */
+/* Accessibility issue */
+:focus-visible {
+  outline: none !important;
+}
+
+/* Overwrite autofill styles for inputs to ensure consistent appearance on multiple themes */
+:root {
+  --primary-text-color: theme("colors.primaryText");
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-background-clip: text;
+  box-shadow: inset 0 0 20px 20px rgb(255, 255, 255, 0.03);
+  -webkit-text-fill-color: var(--primary-text-color) !important;
+  @apply !bg-inputBg;
+  transition: background-color 5000s ease-in-out 0s;
+}
+
+input:-webkit-autofill {
+  -webkit-text-fill-color: white !important;
+}
+
+/* Colors for lightbox gallery on products page */
+.yarl__container {
+  @apply !bg-galleryBg  backdrop-blur-md;
+}
+.yarl__thumbnails_container {
+  @apply !bg-galleryBg   backdrop-blur-md;
+}
+.yarl__thumbnails_vignette {
+  background: none !important;
+}
+.yarl__thumbnails_thumbnail {
+  @apply !border-mainBorder !bg-galleryThumbnailBg backdrop-blur-md;
+}
+
+/* React Datepicker adjustments */
+.react-datepicker__tab-loop {
+  margin-left: 0 !important;
+}
+.react-datepicker {
+  @apply backdrop-blur-md !bg-primaryBg !border-mainBorder text-primaryText;
+}
+.react-datepicker * {
+  @apply !text-primaryText;
+}
+.react-datepicker__header {
+  @apply !bg-datepickerHeaderBg !border-mainBorder !text-primaryText;
+}
+.react-datepicker__current-month {
+  @apply !text-primaryText;
+}
+.react-datepicker__day {
+  @apply !text-primaryText;
+}
+.react-datepicker__day-name {
+  @apply !text-secondaryText;
+}
+.react-datepicker__day:hover {
+  @apply !bg-navItemBgHover;
+}
+.react-datepicker__day--selected {
+  @apply !bg-mainColor !text-white;
+}
+.react-datepicker__day--keyboard-selected {
+  @apply !bg-mainColor !text-white;
+}
+.react-datepicker__day--selected:hover {
+  @apply !bg-mainColor !text-white;
+}
+.react-datepicker__day--keyboard-selected:hover {
+  @apply !bg-mainColor !text-white;
+}
+
+/* Class needed to display different colors for the content spinner on multiple themes and backgrounds (button/pageContainer) */
+.contentSpinner {
+  @apply fill-primaryText;
+}
+
+/* Custom Scrollbar */
+:root {
+  --scrollbar-thumb: theme("colors.scrollbarThumb");
+  --scrollbar-bg: theme("colors.scrollbarBg");
+}
+
+.dark {
+  --scrollbar-thumb: theme("colors.scrollbarThumb");
+  --scrollbar-bg: theme("colors.scrollbarBg");
+}
+
+* {
+  scrollbar-color: var(--scrollbar-thumb) var(--scrollbar-bg) !important;
+  scrollbar-width: thin !important;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.alternativeScrollbar {
+  --scrollbar-bg: theme("colors.primaryBg");
+}
+
+/* Prevent stretching customer photo vertically */
+.customersTable img {
+  min-width: 40px;
+  min-height: 40px;
+}
